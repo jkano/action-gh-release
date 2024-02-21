@@ -8,7 +8,12 @@ if [[ $# -ne 1 ]]; then
 	exit 1
 fi
 
-git checkout -b releases/$1 # If this branch already exists, omit the -b flag
+if [ `git rev-parse --verify releases/$1 2>/dev/null` ]; then
+	echo ""
+else
+	echo "Creating branch $1"
+	git checkout -b releases/$1 # If this branch already exists, omit the -b flag
+fi
 
 rm -rf node_modules
 sed -i '/node_modules/d' .gitignore # Bash command that removes node_modules from .gitignore
@@ -19,14 +24,14 @@ npm install --production
 git add node_modules -f .gitignore
 git add .
 
-git commit -m "Version $0"
+git commit -m "Version $1"
 git push origin releases/$1
 
 # Delete the remote tag
-git push --delete origin $0
+git push --delete origin $1
 
 # Create the tag
-git tag $0
+git tag $1
 
 # Push
 git push --tags
