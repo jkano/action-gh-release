@@ -15,6 +15,7 @@ import { env } from "process";
 async function run() {
   try {
     const config = parseConfig(env);
+    console.debug(`Hello from Jose`);
     if (
       !config.input_tag_name &&
       !isTag(config.github_ref) &&
