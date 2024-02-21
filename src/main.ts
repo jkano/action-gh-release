@@ -21,7 +21,7 @@ async function run() {
       !isTag(config.github_ref) &&
       !config.input_draft
     ) {
-      throw new Error(`⚠️ GitHub Releases requires a tag`);
+      throw new Error(`⚠️ GitHub Releases requires a tag, ups!`);
     }
     if (config.input_files) {
       const patterns = unmatchedPatterns(config.input_files);
