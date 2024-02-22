@@ -13,7 +13,7 @@ git checkout -b $current_branch
 echo " - Pushing current changes to $current_branch"
 git add .
 git commit -m "Updating $current_branch preparing for $fix_branch" --quiet
-git push --quiet
+git push --set-upstream origin $current_branch --quiet
 
 # Check if the current_branch is not the fix_branch
 if [ "$current_branch" != "$fix_branch" ]; then	
