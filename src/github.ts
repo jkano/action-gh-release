@@ -158,7 +158,15 @@ export const upload = async (
   }
   console.log(`⬆️ Uploading ${name}...`);
   const endpoint = new URL(url);
+
+  console.debug(`Endpoint: ${url}`);
+  console.debug(`content-type: ${mime}`);
+  console.debug(`content-len : ${size}`);
+  console.debug(`auth token  : ${config.github_token}`);
+  console.debug(`body: ${body}`);
+
   endpoint.searchParams.append("name", name);
+
   const resp = await fetch(endpoint, {
     headers: {
       "content-length": `${size}`,
@@ -169,6 +177,10 @@ export const upload = async (
     body,
   });
   const json = await resp.json();
+
+  console.debug(json);
+
+
   if (resp.status !== 201) {
     throw new Error(
       `Failed to upload release asset ${name}. received status code ${
