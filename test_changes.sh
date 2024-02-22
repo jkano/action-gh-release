@@ -5,7 +5,7 @@
 
 current_branch="fix"
 fix_branch="fixes/v0.1"
-tag="0.1"
+tag="v0.1"
 
 git checkout -b $current_branch
 
