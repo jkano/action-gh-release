@@ -16,6 +16,7 @@ async function run() {
   try {
     const config = parseConfig(env);
     console.debug(`Hello from Jose`);
+    console.debug(`How are you`);
     if (
       !config.input_tag_name &&
       !isTag(config.github_ref) &&
