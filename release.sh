@@ -12,7 +12,7 @@ current_branch=$(git branch --show-current)
 release_branch="releases/$1"
 
 # First push changes to our current branch so the current branch is updated
-echo "Pushing current changes to $current_branch"
+echo " - Pushing current changes to $current_branch"
 git add .
 git commit -m "Updating $current_branch preparing for $release_branch" --quiet
 git push --quiet
@@ -22,21 +22,21 @@ if [ "$current_branch" != "$release_branch" ]; then
 
 	## If we are not in the release branch, checkout (or create) it
 	if ! git show-ref --quiet refs/heads/$release_branch; then
-		echo "Creating branch $release_branch"
+		echo " - Creating branch $release_branch"
 		git checkout -b $release_branch --quiet
 	else
-		echo "Deleting local $release_branch"
+		echo " - Deleting local $release_branch"
 		git branch -D $release_branch --quiet
 
-		echo "Deleting remote branch $release_branch"
+		echo " - Deleting remote branch $release_branch"
 		git push origin -d $release_branch --quiet
 
-		echo "Creating $release_branch again to update it"
+		echo " - Creating $release_branch again to update it"
 		git checkout -b $release_branch --quiet
 	fi
 fi
 
-echo "Removing old files to recreate"
+echo " - Removing old files to recreate"
 rm -rf node_modules
 
 ## Backup current .gitignore
@@ -44,7 +44,7 @@ mv .gitignore .gitignore_bak
 ## Create new one without node_modules
 echo "__tests__/runner/*" >> .gitignore
 
-echo "Installing modules ..."
+echo " - Installing modules ..."
 npm install --silent
 npm run build
 
@@ -52,23 +52,23 @@ npm run build
 mv .gitignore_bak .gitignore
 
 ## Add everything and commit
-echo "Commiting new files ..."
+echo " - Commiting new files ..."
 git add .
-git commit -m "Version $1"
+git commit -m "Version $1" --quiet
 git push origin releases/$1 --quiet
 
 # Delete the remote tag
-echo "Removing remote tag $1 (if any)"
+echo " - Removing remote tag $1 (if any)"
 git push --delete origin $1 --quiet
 
 # Create the tag and push it
-echo "Creating new tag $1"
+echo " - Creating new tag $1"
 git tag -d $1
 git tag $1
 git push --tags --quiet
 
 # Now return to your working branch
-echo "Switching back to $current_branch"
+echo " - Switching back to $current_branch"
 git checkout $current_branch --quiet
 
-echo "✅ Done"
+echo " ✅ Done"
