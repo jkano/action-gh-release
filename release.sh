@@ -65,7 +65,7 @@ git push --delete origin $1 --quiet
 
 # Create the tag and push it
 echo " - Creating new tag $1"
-git tag -d $1 --quiet
+git tag -d $1
 git tag $1
 git push --tags --quiet
 
