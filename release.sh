@@ -10,16 +10,26 @@ fi
 
 # First push changes to our current branch so the current branch is updated
 git push
+
 current_branch=$(git branch --show-current)
+release_branch="releases/$1"
 
-git rev-parse --abbrev-ref HEAD
+# Check if the current_branch is not the release_branch
+if [ "$current_branch" != "$release_branch" ]; then	
 
-# Now we are ready to release
-if [ `git rev-parse --verify releases/$1 2>/dev/null` ]; then
-	echo ""
-else
-	echo "Creating branch $1"
-	git checkout -b releases/$1 # If this branch already exists, omit the -b flag
+	echo "We are on $current_branch"
+
+	## If we are not in the release branch, checkout (or create) it
+	if ! git show-ref --quiet refs/heads/$release_branch; then
+		echo "Creating branch $release_branch"
+		git checkout -b $release_branch
+	else
+		echo "Deleting local $release_branch..."
+		git branch -d $release_branch
+
+		echo "Creating $release_branch to update it"
+		git checkout -b $release_branch
+	fi
 fi
 
 rm -rf node_modules
