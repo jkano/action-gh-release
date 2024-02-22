@@ -7,7 +7,7 @@ current_branch="fix"
 fix_branch="fixes/v0.1"
 tag="v0.1"
 
-git checkout -b $current_branch
+# git checkout -b $current_branch
 
 # First push changes to our current branch so the current branch is updated
 echo " - Pushing current changes to $current_branch"
