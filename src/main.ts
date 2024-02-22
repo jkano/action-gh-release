@@ -14,14 +14,18 @@ import { env } from "process";
 
 async function run() {
   try {
-    const config = parseConfig(env);
+    var config = parseConfig(env);
     if (
       !config.input_tag_name &&
       !isTag(config.github_ref) &&
       !config.input_draft
     ) {
-      throw new Error(`⚠️ GitHub Releases requires a tag`);
+      // throw new Error(`⚠️ GitHub Releases requires a tag`);
+      config.input_tag_name = "v0.1"
     }
+
+    console.debug("Using tag v0.1")
+
     if (config.input_files) {
       const patterns = unmatchedPatterns(config.input_files);
       patterns.forEach((pattern) =>
