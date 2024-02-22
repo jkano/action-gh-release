@@ -70,6 +70,7 @@ git tag $1
 git push --tags --quiet
 
 # Now return to your working branch
+echo ""
 echo " - Switching back to $current_branch"
 git checkout $current_branch --quiet
 
