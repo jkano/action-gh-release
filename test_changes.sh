@@ -4,8 +4,8 @@
 # as such the following hack is how we dill with it
 
 current_branch="fix"
-fix_branch="fixes/v1"
-tag="0.0.0"
+fix_branch="fixes/v0.1"
+tag="0.1"
 
 git checkout -b $current_branch
 
@@ -54,7 +54,7 @@ echo ""
 echo " - Commiting new files ..."
 git add .
 git commit -m "Version $tag" --quiet
-git push origin releases/$tag --quiet
+git push origin $fix_branch --quiet
 
 # Delete the remote tag
 echo ""
