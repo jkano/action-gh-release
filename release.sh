@@ -52,18 +52,20 @@ npm run build
 mv .gitignore_bak .gitignore
 
 ## Add everything and commit
+echo ""
 echo " - Commiting new files ..."
 git add .
 git commit -m "Version $1" --quiet
 git push origin releases/$1 --quiet
 
 # Delete the remote tag
+echo ""
 echo " - Removing remote tag $1 (if any)"
 git push --delete origin $1 --quiet
 
 # Create the tag and push it
 echo " - Creating new tag $1"
-git tag -d $1
+git tag -d $1 --quiet
 git tag $1
 git push --tags --quiet
 
