@@ -14,7 +14,7 @@ release_branch="releases/$1"
 # First push changes to our current branch so the current branch is updated
 echo "Pushing current changes to $current_branch"
 git add .
-git commit -m "Updating $current_branch preparing for release $release_branch"
+git commit -m "Updating $current_branch preparing for $release_branch" --quiet
 git push --quiet
 
 # Check if the current_branch is not the release_branch
@@ -26,10 +26,10 @@ if [ "$current_branch" != "$release_branch" ]; then
 		git checkout -b $release_branch --quiet
 	else
 		echo "Deleting local $release_branch"
-		git branch -d $release_branch --quiet
+		git branch -D $release_branch --quiet
 
 		echo "Deleting remote branch $release_branch"
-		git push origin - $release_branch
+		git push origin -d $release_branch --quiet
 
 		echo "Creating $release_branch again to update it"
 		git checkout -b $release_branch --quiet
